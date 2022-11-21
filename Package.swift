@@ -77,6 +77,7 @@ let package = Package(
     .target(
       name: "DetailFeature",
       dependencies: [
+        "OpenAIClient",
         "SharedModels",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
       ]

@@ -1,4 +1,5 @@
 import ComposableArchitecture
+import OpenAIClient
 import SharedModels
 import SwiftUI
 
@@ -8,7 +9,7 @@ public struct DetailFeature: ReducerProtocol {
     public var description: String?
     public var isFetchingDescription: Bool = false
     
-    init(turkey: Turkey, description: String? = nil, isFetchingDescription: Bool = false) {
+    public init(turkey: Turkey, description: String? = nil, isFetchingDescription: Bool = false) {
       self.turkey = turkey
       self.description = description
       self.isFetchingDescription = isFetchingDescription
@@ -21,7 +22,7 @@ public struct DetailFeature: ReducerProtocol {
     case cancelButtonTapped
   }
   
-  let getDescription: () async throws -> String
+  @Dependency(\.openAI) var openAI
   
   enum CancelID {}
   
@@ -32,8 +33,11 @@ public struct DetailFeature: ReducerProtocol {
       state.isFetchingDescription = true
       
       return .task {
-        let response = await TaskResult { try await self.getDescription() }
+        let response = await TaskResult { try await openAI.generateDescription() }
         return .descriptionResponse(response)
+      } catch: { err in
+        print(err.localizedDescription)
+        return .descriptionResponse(.failure(err))
       }
       .cancellable(id: CancelID.self)
       
@@ -55,6 +59,8 @@ public struct DetailFeature: ReducerProtocol {
       return .cancel(id: CancelID.self)
     }
   }
+  
+  public init() {}
 }
 
 public struct DetailView: View {
@@ -117,13 +123,9 @@ struct DetailFeature_Previews: PreviewProvider {
             ),
             isFetchingDescription: true
           ),
-          reducer: DetailFeature(
-            getDescription: {
-              return "Very tasty turkey!"
-            }
+          reducer: DetailFeature()
           )
         )
-      )
     }
   }
 }
