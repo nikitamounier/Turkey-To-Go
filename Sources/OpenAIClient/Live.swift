@@ -5,21 +5,21 @@ extension OpenAIClient: DependencyKey {
   static public var liveValue = Self(
     generateDescription: {
       let prompt = "Lavishly describe a roasted turkey that just came out of the oven for thanksgiving. Don't mention the other thanksgiving food. Mention the gravy."
-      let json = GPT3Request(model: "text-davinci-002", prompt: prompt, max_tokens: 6, temperature: 0)
+      
+      let gpt3 = GPT3Request(model: "text-davinci-002", prompt: prompt, max_tokens: 525, temperature: 0.4, top_p: 1, n: 1, stream: false, logprobs: nil, stop: "")
       
       var request = URLRequest(url: URL(string: "https://api.openai.com/v1/completions")!)
       request.allHTTPHeaderFields = [
         "Content-Type": "application/json",
-        "Authorization": apiKey
+        "Authorization": "Bearer \(apiKey)"
       ]
       request.httpMethod = "POST"
-      request.httpBody = try JSONEncoder().encode(json)
+      request.httpBody = try JSONEncoder().encode(gpt3)
       
-      let (data, t) = try await URLSession.shared.data(for: request)
-      print(t)
-      let choice = try JSONDecoder().decode(GPT3Response.self, from: data).choices[0]
+      let (data, _) = try await URLSession.shared.data(for: request)
+      let description = try JSONDecoder().decode(GPT3Response.self, from: data).choices[0].text
       
-      return choice.text
+      return String(description.suffix(from: description.firstIndex(where: \.isLetter)!))
     }
   )
 }
@@ -35,7 +35,12 @@ struct GPT3Request: Encodable {
   let model: String
   let prompt: String
   let max_tokens: Int
-  let temperature: Int
+  let temperature: Double
+  let top_p: Int
+  let n: Int
+  let stream: Bool
+  let logprobs: Int?
+  let stop: String
 }
 
 struct GPT3Response: Decodable {
@@ -55,7 +60,6 @@ struct GPT3Response: Decodable {
   
   struct Usage: Decodable {
     let prompt_tokens: Int
-    let completion_tokens: Int
     let total_tokens: Int
   }
 }

@@ -4,7 +4,7 @@ import XCTestDynamicOverlay
 public extension OpenAIClient {
   static let previewValue: OpenAIClient = Self(
     generateDescription: {
-      return "I'm not a real turkey, this is a preview. Run the app for real!"
+      return "This is a preview!"
     }
   )
 }

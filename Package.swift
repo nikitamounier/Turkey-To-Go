@@ -63,6 +63,7 @@ let package = Package(
     .target(
       name: "ShoppingFeature",
       dependencies: [
+        "DetailFeature",
         "SharedModels",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
       ]

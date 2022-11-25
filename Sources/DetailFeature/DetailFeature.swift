@@ -2,9 +2,11 @@ import ComposableArchitecture
 import OpenAIClient
 import SharedModels
 import SwiftUI
+import Foundation
 
 public struct DetailFeature: ReducerProtocol {
-  public struct State: Equatable {
+  public struct State: Identifiable, Equatable {
+    public var id: Turkey.ID { turkey.id }
     public let turkey: Turkey
     public var description: String?
     public var isFetchingDescription: Bool = false
@@ -33,11 +35,10 @@ public struct DetailFeature: ReducerProtocol {
       state.isFetchingDescription = true
       
       return .task {
-        let response = await TaskResult { try await openAI.generateDescription() }
+        let response = await TaskResult {
+          try await openAI.generateDescription()
+        }
         return .descriptionResponse(response)
-      } catch: { err in
-        print(err.localizedDescription)
-        return .descriptionResponse(.failure(err))
       }
       .cancellable(id: CancelID.self)
       
@@ -75,9 +76,10 @@ public struct DetailView: View {
       Form {
         Section {
           HStack {
-            Image(viewStore.turkey.imageName)
+            Image(viewStore.turkey.imageName, bundle: Bundle.module)
               .resizable()
               .scaledToFit()
+              .cornerRadius(10)
             VStack(alignment: .leading) {
               Text("• **Brand**: \(viewStore.turkey.brand)")
               Text("• **Preparation**: \(viewStore.turkey.preparation.description)")
@@ -124,8 +126,12 @@ struct DetailFeature_Previews: PreviewProvider {
             isFetchingDescription: true
           ),
           reducer: DetailFeature()
-          )
+            .dependency(
+              \.openAI,
+               .init(generateDescription: { "Happy thanksgiving! "})
+            )
         )
+      )
     }
   }
 }

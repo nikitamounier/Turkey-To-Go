@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		E430BD7C29292B140005744A /* Turkey-To-Go.swift in Sources */ = {isa = PBXBuildFile; fileRef = E430BD7B29292B140005744A /* Turkey-To-Go.swift */; };
-		E430BD7E29292B140005744A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E430BD7D29292B140005744A /* ContentView.swift */; };
 		E430BD8029292B140005744A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E430BD7F29292B140005744A /* Assets.xcassets */; };
 		E430BD8329292B140005744A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E430BD8229292B140005744A /* Preview Assets.xcassets */; };
+		E4497974292D8761003F6EB4 /* ShoppingFeature in Frameworks */ = {isa = PBXBuildFile; productRef = E4497973292D8761003F6EB4 /* ShoppingFeature */; };
 		E4ABA3A4292C246C00789DF3 /* DetailFeaturePreviewApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4ABA3A3292C246C00789DF3 /* DetailFeaturePreviewApp.swift */; };
 		E4ABA3A8292C246D00789DF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4ABA3A7292C246D00789DF3 /* Assets.xcassets */; };
 		E4ABA3AB292C246D00789DF3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4ABA3AA292C246D00789DF3 /* Preview Assets.xcassets */; };
@@ -20,7 +20,6 @@
 /* Begin PBXFileReference section */
 		E430BD7829292B140005744A /* Turkey-To-Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Turkey-To-Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E430BD7B29292B140005744A /* Turkey-To-Go.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Turkey-To-Go.swift"; sourceTree = "<group>"; };
-		E430BD7D29292B140005744A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E430BD7F29292B140005744A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E430BD8229292B140005744A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E430BD8929292B3D0005744A /* Turkey-To-Go */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "Turkey-To-Go"; path = ..; sourceTree = "<group>"; };
@@ -35,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4497974292D8761003F6EB4 /* ShoppingFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,7 +80,6 @@
 			isa = PBXGroup;
 			children = (
 				E430BD7B29292B140005744A /* Turkey-To-Go.swift */,
-				E430BD7D29292B140005744A /* ContentView.swift */,
 				E430BD7F29292B140005744A /* Assets.xcassets */,
 				E430BD8129292B140005744A /* Preview Content */,
 			);
@@ -138,6 +137,7 @@
 			);
 			name = "Turkey-To-Go";
 			packageProductDependencies = (
+				E4497973292D8761003F6EB4 /* ShoppingFeature */,
 			);
 			productName = "Turkey-To-Go";
 			productReference = E430BD7829292B140005744A /* Turkey-To-Go.app */;
@@ -170,7 +170,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1400;
+				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					E430BD7729292B140005744A = {
@@ -191,6 +191,7 @@
 			);
 			mainGroup = E430BD6F29292B140005744A;
 			packageReferences = (
+				E49E5172292D84700081FDCE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = E430BD7929292B140005744A /* Products */;
 			projectDirPath = "";
@@ -228,7 +229,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E430BD7E29292B140005744A /* ContentView.swift in Sources */,
 				E430BD7C29292B140005744A /* Turkey-To-Go.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -506,7 +506,22 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		E49E5172292D84700081FDCE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.39.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		E4497973292D8761003F6EB4 /* ShoppingFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ShoppingFeature;
+		};
 		E4ABA3AF292C247F00789DF3 /* DetailFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DetailFeature;
